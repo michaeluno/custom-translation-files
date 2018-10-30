@@ -19,11 +19,11 @@ Let's say, you have translated a plugin or theme and have a mo file ready. But t
 
 In this case, you may be able to upload the file in the location that the plugin uses within the plugin's directory but this is not an ideal solution because when it is updated, your translation file is gone. You have to repeat doing it.
 
-This plugin solves this problem by allowing you upload the mo file and lets WordPress use it.
+This plugin solves this problem by allowing you to upload the mo file and lets WordPress use it.
 
 What you need are:
 
-- mo file (the translation file)
+- mo file (the translation file with a text domain prefix)
 - text domain (usually the plugin/theme slug)
 
 Set these in the setting page and the plugin will takes care of the rest.
