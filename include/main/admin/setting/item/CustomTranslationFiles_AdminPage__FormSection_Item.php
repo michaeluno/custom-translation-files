@@ -83,7 +83,10 @@ class CustomTranslationFiles_AdminPage__FormSection_Item extends CustomTranslati
                 'attributes'        => array(
                     'required'  => 'required',
                 ),
-
+                'description'       => array(
+                    __( 'The file name should start with the text domain and a hyphen, and the locale.', 'custom-translation-files' ),
+                    'e.g. <code>my-text-domain-de_DE.mo</code>, <code>my-text-domain-ja.mo</code>'
+                ),
             ),
             array(
                 'field_id'         => 'locale',
@@ -116,6 +119,8 @@ class CustomTranslationFiles_AdminPage__FormSection_Item extends CustomTranslati
             foreach( $aInputs as $_iIndex => $_aItem ) {
 
                 $_aFormatted[ $_iIndex ] = $_aItem;
+
+                // Check URL
                 $_sURL        = $_aItem[ 'mo_file_url' ];
                 if ( ! $_sURL ) {
                     $_bHasError = true;
@@ -123,6 +128,7 @@ class CustomTranslationFiles_AdminPage__FormSection_Item extends CustomTranslati
                     continue;
                 }
 
+                // Check Path
                 $_sPath       = str_replace( site_url(), rtrim( ABSPATH, '\\/' ), $_sURL );
                 $_sPath       = str_replace( '\\', '/', $_sPath );
                 $_aFormatted[ $_iIndex ][ 'mo_file_path' ] = $_sPath;
@@ -133,6 +139,18 @@ class CustomTranslationFiles_AdminPage__FormSection_Item extends CustomTranslati
                 }
 
                 $_sBaseName   = basename( $_sURL, '.mo' );
+
+                // Check text domain
+                // Sanitise
+                $_aItem[ 'text_domain' ] = trim( $_aItem[ 'text_domain' ] );
+                $_sTextDomain = preg_replace( '/(.+)-.+/', '$1', $_sBaseName );
+                if ( $_aItem[ 'text_domain' ] && $_sTextDomain !== $_aItem[ 'text_domain' ] ) {
+                    $_bHasError = true;
+                    $_aErrors[ 'items' ][ 'text_domain' ] = __( 'The text domain in the file name are not properly set.', 'custom-translation-files' );
+                    continue;
+                }
+                $_aFormatted[ $_iIndex ][ 'text_domain' ] = $_aItem[ 'text_domain' ];
+
                 $_sLocale     = preg_replace( '/.+-(.+)/', '$1', $_sBaseName );
                 $_aFormatted[ $_iIndex ][ 'locale' ] = $_sLocale;
 
@@ -155,7 +173,7 @@ class CustomTranslationFiles_AdminPage__FormSection_Item extends CustomTranslati
             return $aOldInput;
 
         }
-CustomTranslationFiles_Debug::log( $aInputs );
+
         return $aInputs;
 
     }
