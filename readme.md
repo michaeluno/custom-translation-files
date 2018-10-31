@@ -2,10 +2,10 @@
 
 ### Welcome to our GitHub Repository
 
-Custom Translation Files is an open source WordPress plugin that lets you add Custom Translation Filess to specified HTML elements.
+Custom Translation Files is an open source WordPress plugin that allows you to set custom translation files for a particular text domain. 
 
 <p align="center">
-    <img src="" alt="Custom Translation Files" />
+    <img src="./_asset/image/screenshot.png" alt="Custom Translation Files" />
 </p>
 
 ## Screenshots ##
